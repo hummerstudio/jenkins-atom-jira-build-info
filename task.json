@@ -1,0 +1,163 @@
+{
+  "atomCode": "jira-build-info",
+  "name": "Jira build / deployment info",
+  "version": "1.0.0",
+  "description": "Sends this build or deployment to Jira Software Cloud (the Jira app webhook, signed JWT).",
+  "execution": {
+    "packagePath": "jira-build-info.jar",
+    "language": "java",
+    "target": "$atom_java_path -cp jira-build-info.jar com.jenkinschina.atom.sdk.AtomRunner"
+  },
+  "input": {
+    "action": {
+      "label": "发什么（build / deployment）",
+      "type": "vuex-input",
+      "default": "build"
+    },
+    "webhookUrl": {
+      "label": "Jira 应用的回调地址（站点里 Jenkins 应用连接后给出）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "secret": {
+      "label": "应用共享密钥（签 JWT）",
+      "type": "password",
+      "default": ""
+    },
+    "projectName": {
+      "label": "项目全名（默认 ${JOB_NAME}）",
+      "type": "vuex-input",
+      "default": "${JOB_NAME}"
+    },
+    "buildNumber": {
+      "label": "构建号（默认 ${BUILD_NUMBER}）",
+      "type": "vuex-input",
+      "default": "${BUILD_NUMBER}"
+    },
+    "buildUrl": {
+      "label": "构建链接（默认 ${BUILD_URL}）",
+      "type": "vuex-input",
+      "default": "${BUILD_URL}"
+    },
+    "label": {
+      "label": "显示名（默认 ${BUILD_DISPLAY_NAME}）",
+      "type": "vuex-input",
+      "default": "${BUILD_DISPLAY_NAME}"
+    },
+    "state": {
+      "label": "状态（留空则按构建结果推断）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "issueKeys": {
+      "label": "Issue Keys（逗号分隔；留空则从分支名/提交里提取）",
+      "type": "textarea",
+      "default": ""
+    },
+    "branch": {
+      "label": "分支名（默认 ${BRANCH_NAME}）",
+      "type": "vuex-input",
+      "default": "${BRANCH_NAME}"
+    },
+    "changeBranch": {
+      "label": "源分支（默认 ${CHANGE_BRANCH}）",
+      "type": "vuex-input",
+      "default": "${CHANGE_BRANCH}"
+    },
+    "commitMessages": {
+      "label": "提交信息（提取 issue key 用）",
+      "type": "textarea",
+      "default": ""
+    },
+    "description": {
+      "label": "描述",
+      "type": "textarea",
+      "default": ""
+    },
+    "testsTotal": {
+      "label": "测试总数（留空则不报测试）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "testsFailed": {
+      "label": "失败数",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "testsSkipped": {
+      "label": "跳过数",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "environmentId": {
+      "label": "环境 id（deployment）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "environmentName": {
+      "label": "环境名（deployment）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "environmentType": {
+      "label": "环境类型 development/testing/staging/production",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "serviceIds": {
+      "label": "服务 id（deployment，逗号分隔）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "enableGating": {
+      "label": "部署门禁（true 则请求 Jira 门禁）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "timeoutSeconds": {
+      "label": "超时秒数",
+      "type": "vuex-input",
+      "default": "30"
+    }
+  },
+  "output": {
+    "action": {
+      "type": "string",
+      "description": "build 或 deployment"
+    },
+    "skipped": {
+      "type": "string",
+      "description": "true 表示没有可关联的 issue key / 服务，未发请求"
+    },
+    "pipelineId": {
+      "type": "string",
+      "description": "Jira 用来认这条流水线的 id（项目名的哈希）"
+    },
+    "state": {
+      "type": "string",
+      "description": "发出的状态"
+    },
+    "issueKeys": {
+      "type": "string",
+      "description": "关联的 issue keys"
+    },
+    "accepted": {
+      "type": "string",
+      "description": "Jira 接收条数"
+    },
+    "unknownAssociations": {
+      "type": "string",
+      "description": "Jira 不认识的关联数"
+    },
+    "httpStatus": {
+      "type": "string",
+      "description": "回调的 HTTP 状态"
+    }
+  },
+  "x-jenkins": {
+    "protocol": "jenkins-1",
+    "requires": {
+      "runner": ">=0.4.0"
+    }
+  }
+}

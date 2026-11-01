@@ -1,0 +1,12 @@
+{
+  "name": "Jira build / deployment info",
+  "summary": "Sends build and deployment information to Jira Software Cloud through the Jira app webhook, signed as HS256 JWT.",
+  "author": "hummerstudio",
+  "license": "MIT",
+  "tags": [
+    "official-port",
+    "jira",
+    "atlassian",
+    "deployment"
+  ]
+}
