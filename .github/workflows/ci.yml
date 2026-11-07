@@ -37,4 +37,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: jira-build-info-atom
-          path: atom/dist/jira-build-info/
+          path: atom/target/dist/jira-build-info/
