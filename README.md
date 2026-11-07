@@ -72,9 +72,10 @@ fix) and is validated against development/testing/staging/production/unmapped.
 
 ## Verification
 
-`./tools/smoke.sh` builds the atom and runs `tools/check.py`, which starts a fake Jira app that verifies the JWT the way
-the app does (HS256 over the secret, iss/aud, a five-minute expiry) and validates the event against the app's contract
-before scoring anything. The checker then recomputes, from the atom's **own inputs**, what the payload should say —
+`mvn verify` runs `src/test/java/atom/JiraBuildInfoIT.java`, which starts a fake Jira app (`FakeJiraApp`) that verifies
+the JWT the way the app does (HS256 over the secret, iss/aud, a five-minute expiry) and validates the event against the
+app's contract before scoring anything. The test then recomputes, from the atom's **own inputs**, what the payload
+should say —
 Java `hashCode` of the project name, state from `BUILD_STATUS`, issue keys from the branch names with the plugin's
 regex, `passed = total - failed - skipped` — and compares that with what the server recorded. 16 cases: the four
 Jenkins results plus "no result", explicit/sorted keys, test info, a lower-case branch that must be skipped without a
